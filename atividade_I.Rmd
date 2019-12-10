@@ -1,0 +1,392 @@
+---
+title: "Atividade I"
+author: "Laíla Luana Campos"
+date: "06/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<div style="text-align: justify"> 
+
+[Atividade I: Atividades humanas \versus celulares](#heading-3)
+
+
+Essa análise é baseada no conjunto de dados original publicado pela:
+
+Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio e Luca Oneto. Smartlab - Laboratório de Sistemas Complexos Não Lineares DITEN - Universitégli Studi di Genova, Gênova I-16145, Itália.
+
+Uma descrição completa do experimento está disponível no site em que os dados foram obtidos:
+
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+Os arquivos usados para esta análise são:
+
+'features.txt': lista de todos os recursos.
+'activity_labels.txt': vincula os rótulos da classe ao nome da atividade.
+'train/X_train.txt': conjunto de treinamento.
+'train/y_train.txt': rótulos de treinamento.
+'test/X_test.txt': conjunto de testes.
+'test/y_test.txt': rótulos de teste.
+
+*Lista de variáveis:*
+
+O conjunto de dados de saída inclui $83$ variáveis, sendo: $2$ variáveis de agrupamento [Atividade e Assunto] e $81$ variáveis de medida que representam a média de cada variável no conjunto de dados original para cada atividade e cada assunto. 
+
+**Descrições das variáveis:**
+
+* Atividade: atividade executada pelo sujeito no experimento. Seis valores ou níveis diferentes: LAYING SITTING STANDING WALKING WALKING_DOWNSTAIRS WALKING_UPSTAIRS
+
+* Assunto: Voluntário que realizou o experimento. Cada valor diferente representa um dos $30$ voluntários que participaram do experimento.
+
+* tBodyAcc-mean () - X: Aceleração média do corpo no eixo X para a atividade e o assunto especificados.
+
+* tBodyAcc-mean () - Y: Aceleração média do corpo no eixo Y da atividade e do assunto especificados.
+
+* tBodyAcc-mean () - Z: Aceleração média do corpo no eixo Z para a atividade e o assunto especificados.
+
+* tBodyAcc-std () - X: desvio padrão médio da aceleração corporal no eixo X para a atividade e o assunto especificados.
+
+* tBodyAcc-std () - Y: desvio padrão médio da aceleração do corpo no eixo Y da atividade e do assunto especificados.
+
+*tBodyAcc-std () - Z: desvio padrão médio da aceleração do corpo no eixo Z para a atividade e o assunto especificados.
+
+* tGravityAcc-mean () - X: Aceleração da gravidade média no eixo X para a atividade e o assunto especificados.
+* tGravityAcc-mean () - Y: aceleração da gravidade média no eixo Y da atividade e do assunto especificados.
+
+* tGravityAcc-mean () - Z: aceleração da gravidade média no eixo Z para a atividade e o assunto especificados.
+
+* tGravityAcc-std () - X: desvio padrão médio da aceleração da gravidade no eixo X para a atividade e o assunto especificados.
+
+* tGravityAcc-std () - Y: desvio padrão médio da aceleração da gravidade no eixo Y da atividade e do assunto especificados.
+
+* tGravityAcc-std () - Z: desvio padrão médio da aceleração da gravidade no eixo Z para a atividade e o assunto especificados.
+
+* tBodyAccJerk-mean () - X: taxa média de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo X para a atividade e o assunto especificados.
+
+* tBodyAccJerk-mean () - Y: taxa média de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo Y para a atividade e o assunto especificados.
+
+* tBodyAccJerk-mean () - Z: taxa média de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo Z para a atividade e o assunto especificados.
+
+* tBodyAccJerk-std () - X: desvio padrão médio da taxa de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo X para a atividade e o assunto especificados.
+
+* tBodyAccJerk-std () - Y: desvio padrão médio da taxa de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo Y para a atividade e o assunto especificados.
+
+* tBodyAccJerk-std () - Z: desvio padrão médio da taxa de variação da aceleração; isto é, a derivada da aceleração em relação ao tempo no eixo Z para a atividade e o assunto especificados.
+
+* tBodyGyro-mean () - X
+
+* tBodyGyro-mean () - Y
+
+* tBodyGyro-mean () - Z
+
+* tBodyGyro-std () - X
+
+* tBodyGyro-std () - Y
+
+* tBodyGyro-std () - Z
+
+* Média tBodyGyroJerk () - X
+
+* Média tBodyGyroJerk () - Y
+
+* tBodyGyroJerk-mean () - Z
+
+* tBodyGyroJerk-std () - X
+
+* tBodyGyroJerk-std () - Y
+
+* tBodyGyroJerk-std () - Z
+
+* tBodyAccMag-mean ()
+
+* tBodyAccMag-std ()
+
+* tGravityAccMag-mean ()
+
+* tGravityAccMag-std ()
+
+* tBodyAccJerkMag-mean ()
+
+* tBodyAccJerkMag-std ()
+
+* tBodyGyroMag-mean ()
+
+* tBodyGyroMag-std ()
+
+* tBodyGyroJerkMag-mean ()
+
+* tBodyGyroJerkMag-std ()
+
+* fBodyAcc-mean () - X
+
+* fBodyAcc-mean () - Y
+
+* fBodyAcc-mean () - Z
+
+* fBodyAcc-std () - X
+
+* fBodyAcc-std () - Y
+
+* fBodyAcc-std () - Z
+
+* fBodyAcc-meanFreq () - X
+
+* fBodyAcc-meanFreq () - Y
+
+* fBodyAcc-meanFreq () - Z
+
+* fBodyAccJerk-mean () - X
+
+* fBodyAccJerk-mean () - Y
+
+* fBodyAccJerk-mean () - Z
+
+* fBodyAccJerk-std () - X
+
+* fBodyAccJerk-std () - Y
+
+* fBodyAccJerk-std () - Z
+
+* fBodyAccJerk-meanFreq () - X
+
+* fBodyAccJerk-meanFreq () - Y
+
+* fBodyAccJerk-meanFreq () - Z
+
+* fBodyGyro-mean () - X
+
+* fBodyGyro-mean () - Y
+
+* fBodyGyro-mean () - Z
+
+* fBodyGyro-std () - X
+
+* fBodyGyro-std () - Y
+
+* fBodyGyro-std () - Z
+
+* fBodyGyro-meanFreq () - X
+
+* fBodyGyro-meanFreq () - Y
+
+* fBodyGyro-meanFreq () - Z
+
+* fBodyAccMag-mean ()
+
+* fBodyAccMag-std ()
+
+* fBodyAccMag-meanFreq ()
+
+* fBodyBodyAccJerkMag-mean ()
+
+* fBodyBodyAccJerkMag-std ()
+
+* fBodyBodyAccJerkMag-meanFreq ()
+
+* fBodyBodyGyroMag-mean ()
+
+* fBodyBodyGyroMag-std ()
+
+* fBodyBodyGyroMag-meanFreq ()
+
+* fBodyBodyGyroJerkMag-mean ()
+
+* fBodyBodyGyroJerkMag-std ()
+
+* fBodyBodyGyroJerkMag-meanFreq ()
+
+**Processamento dos dados**
+
+Mesclando os conjuntos de treinamento e teste para criar um conjunto de dados:
+
+```{r, include=TRUE, message=F}
+
+features <- read.table(file = "features.txt", sep = " ")
+
+activities <- read.table(file = "activity_labels.txt", stringsAsFactors = TRUE, check.names=FALSE, col.names = c("ActivityId", "Activity"))
+
+test <- read.table(file = "test/X_test.txt", stringsAsFactors = TRUE,  check.names=FALSE, col.names = t(features[2])) 
+
+testY <- read.table(file = "test/y_test.txt", stringsAsFactors = TRUE,  check.names=FALSE, col.names = "ActivityId") 
+
+testSubject <- read.table(file = "test/subject_test.txt", stringsAsFactors = TRUE,  check.names=FALSE, col.names = "Subject") 
+
+testDataset <- cbind(test, testY, testSubject)
+
+train <- read.table(file = "train/X_train.txt", stringsAsFactors = TRUE, check.names=FALSE, col.names = t(features[2]))
+
+trainY <- read.table(file = "train/y_train.txt", stringsAsFactors = TRUE,  check.names=FALSE, col.names = "ActivityId") 
+
+trainSubject <- read.table(file = "train/subject_train.txt", stringsAsFactors = TRUE,  check.names=FALSE, col.names = "Subject") 
+
+trainDataset <- cbind(train, trainY, trainSubject)
+
+tmpDataset <- rbind.data.frame(testDataset, trainDataset)
+
+dataset <- merge(tmpDataset, activities, by="ActivityId")
+
+library(dplyr)
+dataset_num <- mutate_if(dataset[,-564], is.factor, as.numeric)
+
+#View(dataset)
+
+```
+
+Extraindo apenas a média e o desvio padrão para cada medição:
+
+```{r, include=TRUE, message=F}
+
+filteredCol <- grepl("std|mean|^Activity$|^Subject$",names(dataset))
+
+interestingColumns <- names(dataset)[filteredCol]
+
+filteredDataset <- dataset[,interestingColumns]
+
+```
+
+A partir do conjunto de dados original, foi criado um segundo conjunto de dados organizado e independente, com a média de cada variável para cada atividade e cada sujeito.
+
+```{r, include=TRUE, message=F}
+
+stdOrMeanColumns <- grepl("std|mean", names(filteredDataset))
+
+sol <- aggregate.data.frame( x =                       filteredDataset[,stdOrMeanColumns], by = list(Activity = filteredDataset$Activity, Subject = filteredDataset$Subject), FUN = mean)
+
+```
+
+**Estatística descritiva**
+
+Medidas de posição, dispersão, assimetria e curtose, além de gráficos de barra, histograma, entre outros; 
+
+Resumo das variáveis:
+
+```{r, include=TRUE, message=F}
+summary(sol)
+```
+
+
+```{r, include=TRUE, message=F}
+
+plot(dataset$Activity, col="orange")
+
+```
+
+As atividades realizadas são:
+
+- WALKING (andando),
+
+- WALKING_UPSTAIRS (subindo escada),
+
+- WALKING_DOWNSTAIRS (descendo escada),
+
+- SITTING (sentando),
+
+- STANDING (ficando de pé),
+
+- LAYING (deitando).
+
+
+```{r, include=TRUE, message=F}
+
+library(dplyr); library(ggplot2)
+
+dados <-  mutate_if(dataset[,-564], is.factor, as.numeric); colnames(dados) = "Resposta"
+
+dataset_num <-  mutate_if(dataset[,-564], is.factor, as.numeric)
+
+ggplot(data=dados, aes(x=factor(Resposta))) +
+  geom_bar(stat="count", 
+           position=position_dodge(), 
+           fill = "#FF0801")+
+  theme_classic()+     
+  scale_x_discrete("Resposta")+
+  scale_y_continuous("N")
+
+```
+
+
+**Análise Multivariada**
+
+***Análise de Componentes Principais (PCA)***
+
+Observa-se que a $1ª$ componente principal ($CP$) corresponde a $57,2\%$ da variabilidade total dos dados, e a segunda $CP$ a $26,7\%$. Assim, a primeira e a segunda $CPs$ correspondem a aproximadamente $84\%$ da variabilidade total dos dados.
+
+```{r, include=TRUE, message=F}
+
+library(FactoMineR); library(factoextra)
+
+dados <-  mutate_if(dataset[,-564], is.factor, as.numeric)
+
+PC <- prcomp(dados)
+
+library(ggpubr)
+
+fviz_eig(PC, addlabels = T, ylim=c(0,90))
+
+```
+
+
+Então, as principais variáveis que constituem estas $2$ $CPs$ são:
+
+```{r, include=TRUE, message=F}
+
+var <- get_pca_var(PC)
+
+par(mfrow=c(2,1))
+
+# CP1:
+fviz_contrib(PC, choice = "var", axes = 1, title = "",top = 10)
+
+#CP2:
+fviz_contrib(PC, choice = "var", axes = 2, title = "",top = 20)
+
+```
+
+Portanto, as variáveis que têm o maior peso na construção das 2 primeiras $CP$ são:
+
+- fBodyAccsma, 
+
+- fBodyAccJerksma, 
+
+- BodyAccMagaCoeff1,
+
+- tGravityAccMagacoeff1.
+
+
+Podemos realizar a análise preditiva considerando apenas estas $4$ variáveis então.
+
+
+***Clusters***
+
+
+```{r, include=TRUE, message=F}
+
+data_scaled <- scale(dataset_num)
+
+mun.hc.complete <- hclust(dist(data_scaled), method="complete")
+
+mun.hc.average <- hclust(dist(data_scaled), method="average")
+
+mun.hc.single <- hclust(dist(data_scaled), method="single")
+
+```
+
+
+
+```{r, include=TRUE, message=F}
+
+par(mfrow=c(1,3))
+
+plot(mun.hc.complete, main="Complete Linkage", xlab="", sub="",
+     cex=.9, hang=-1)
+
+plot(mun.hc.average, main="Average Linkage", xlab="", sub="",
+     cex=.9, hang=-1)
+
+plot(mun.hc.single, main="Single Linkage", xlab="", sub="",
+     cex=.9, hang=-1)
+
+```
